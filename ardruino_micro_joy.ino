@@ -8,30 +8,35 @@ Joystick_ Joystick(JOYSTICK_DEFAULT_REPORT_ID,JOYSTICK_TYPE_JOYSTICK,
   false, false, false);  // No accelerator, brake, or steering
 
 unsigned long refrehRate = 15; // The refresh Rate between sonsor chekking in ms.
-int reverseButtonState[4] = {false, true, false, false};
-// Last state of the button
-int lastButtonState[4] = {0,1,0,0};
+                               // lower value means faster refresh.
 
+// reversebutton state inverts the signal processing (signal means no button is pressed
+// no signal means button is pressed).                               
+int reverseButtonState[4] = {false, true, false, false};
+
+// if debug is true, the device will send the button information to the serial port
+// can be viewed with the serial monitor in arduino IDE.
 bool debugMode = false;
 String debugMessage = "";
+
+const int pinToButtonMap = 9; // Constant that maps the phyical pin to the joystick button. a value of 0 for example
+                                // Means button 0 is wired to PIN 9, button 1 to PIN 10, etc.
 
 void setup() {
   if(debugMode)
   {
      Serial.begin(9600);
   }
- 
+  
   // Initialize Button Pins
-  pinMode(6, INPUT_PULLUP);
-  pinMode(7, INPUT_PULLUP);
-  pinMode(8, INPUT_PULLUP);
-  pinMode(9, INPUT_PULLUP);
+  pinMode(pinToButtonMap, INPUT_PULLUP);
+  pinMode(pinToButtonMap + 1, INPUT_PULLUP);
+  pinMode(pinToButtonMap + 2, INPUT_PULLUP);
+  pinMode(pinToButtonMap + 3, INPUT_PULLUP);
 
   Joystick.begin();
-  }
 
-// Constant that maps the phyical pin to the joystick button. Means button 0 is wired to PIN 9, button 1 to PIN 10, etc.
-const int pinToButtonMap = 6;
+}
 
 
 void loop() {
@@ -53,7 +58,6 @@ void loop() {
      Serial.print(debugMessage);
     }
     Joystick.setButton(index, currentButtonState);
-    lastButtonState[index] = currentButtonState;
 
   }
 
