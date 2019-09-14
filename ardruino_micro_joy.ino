@@ -19,7 +19,7 @@ int reverseButtonState[4] = {false, true, false, false};
 bool debugMode = false;
 String debugMessage = "";
 
-const int pinToButtonMap = 9; // Constant that maps the phyical pin to the joystick button. a value of 0 for example
+const int pinToButtonMap = 6; // Constant that maps the phyical pin to the joystick button. a value of 0 for example
                                 // Means button 0 is wired to PIN 9, button 1 to PIN 10, etc.
 
 int lastButtonState[4] = {0,0,0,0};
