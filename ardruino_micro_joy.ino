@@ -22,16 +22,16 @@ void setup() {
   }
  
   // Initialize Button Pins
+  pinMode(6, INPUT_PULLUP);
+  pinMode(7, INPUT_PULLUP);
+  pinMode(8, INPUT_PULLUP);
   pinMode(9, INPUT_PULLUP);
-  pinMode(10, INPUT_PULLUP);
-  pinMode(11, INPUT_PULLUP);
-  pinMode(12, INPUT_PULLUP);
 
   Joystick.begin();
   }
 
 // Constant that maps the phyical pin to the joystick button. Means button 0 is wired to PIN 9, button 1 to PIN 10, etc.
-const int pinToButtonMap = 9;
+const int pinToButtonMap = 6;
 
 
 void loop() {
