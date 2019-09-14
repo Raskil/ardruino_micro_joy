@@ -22,6 +22,8 @@ String debugMessage = "";
 const int pinToButtonMap = 9; // Constant that maps the phyical pin to the joystick button. a value of 0 for example
                                 // Means button 0 is wired to PIN 9, button 1 to PIN 10, etc.
 
+int lastButtonState[4] = {0,0,0,0};
+
 void setup() {
   if(debugMode)
   {
@@ -40,7 +42,7 @@ void setup() {
 
 
 void loop() {
-  // Read pin values
+   // Read pin values
   for (int index = 0; index < 4; index++)
   {
     int currentButtonState = !digitalRead(index + pinToButtonMap);
@@ -57,8 +59,11 @@ void loop() {
      debugMessage = debugMessage + "\r\n";
      Serial.print(debugMessage);
     }
-    Joystick.setButton(index, currentButtonState);
-
+    if (currentButtonState != lastButtonState[index])
+    {
+      Joystick.setButton(index, currentButtonState);
+      lastButtonState[index] = currentButtonState;
+    }
   }
 
   delay(refrehRate);
